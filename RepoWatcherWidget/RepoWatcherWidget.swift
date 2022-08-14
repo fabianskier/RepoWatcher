@@ -9,45 +9,54 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+    func placeholder(in context: Context) -> RepoEntry {
+        RepoEntry(date: Date(), repo: Repository.placeholder, avatarImageData: Data())
     }
-
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+    
+    func getSnapshot(in context: Context, completion: @escaping (RepoEntry) -> ()) {
+        let entry = RepoEntry(date: Date(), repo: Repository.placeholder, avatarImageData: Data())
         completion(entry)
     }
-
+    
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
+        Task {
+            let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
+            
+            do {
+                let repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.elixirRepoURL)
+                let avatar = await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl)
+                let entry = RepoEntry(date: .now, repo: repo, avatarImageData: avatar ?? Data())
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            } catch {
+                print("😵 Error - \(error.localizedDescription)")
+            }
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct RepoEntry: TimelineEntry {
     let date: Date
+    let repo: Repository
+    let avatarImageData: Data
 }
 
 struct RepoWatcherWidgetEntryView : View {
     var entry: Provider.Entry
-
+    let formatter = ISO8601DateFormatter()
+    var daysSinceLastActivity: Int {
+        calculateDaysSinceLastActivity(from: entry.repo.pushedAt)
+    }
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Circle()
+                    Image(uiImage: UIImage(data: entry.avatarImageData) ?? UIImage(named: "avatar")!)
+                        .resizable()
+                        .clipShape(Circle())
                         .frame(width: 50, height: 50)
-                    Text("widget-repo")
+                    Text(entry.repo.name)
                         .font(.title2)
                         .fontWeight(.semibold)
                         .minimumScaleFactor(0.6)
@@ -56,21 +65,22 @@ struct RepoWatcherWidgetEntryView : View {
                 .padding(.bottom, 6)
                 
                 HStack {
-                    StatLabel(value: 999, systemImageName: "star.fill")
-                    StatLabel(value: 999, systemImageName: "tuningfork")
-                    StatLabel(value: 999, systemImageName: "exclamationmark.triangle.fill")
+                    StatLabel(value: entry.repo.watchers, systemImageName: "star.fill")
+                    StatLabel(value: entry.repo.forks, systemImageName: "tuningfork")
+                    StatLabel(value: entry.repo.openIssues, systemImageName: "exclamationmark.triangle.fill")
                 }
             }
             
             Spacer()
             
             VStack {
-                Text("99")
+                Text("\(daysSinceLastActivity)")
                     .bold()
                     .font(.system(size: 70))
                     .frame(width: 90)
                     .minimumScaleFactor(0.6)
                     .lineLimit(1)
+                    .foregroundColor(daysSinceLastActivity > 50 ? .pink : .green)
                 
                 Text("days ago")
                     .font(.caption2)
@@ -79,12 +89,19 @@ struct RepoWatcherWidgetEntryView : View {
         }
         .padding()
     }
+    
+    func calculateDaysSinceLastActivity(from dateString: String) -> Int {
+        let lastActivityDate = formatter.date(from: dateString) ?? .now
+        let daysSinceLastActivity = Calendar.current.dateComponents([.day], from: lastActivityDate, to: .now).day ?? 0
+        
+        return daysSinceLastActivity
+    }
 }
 
 @main
 struct RepoWatcherWidget: Widget {
     let kind: String = "RepoWatcherWidget"
-
+    
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             RepoWatcherWidgetEntryView(entry: entry)
@@ -97,7 +114,7 @@ struct RepoWatcherWidget: Widget {
 
 struct RepoWatcherWidget_Previews: PreviewProvider {
     static var previews: some View {
-        RepoWatcherWidgetEntryView(entry: SimpleEntry(date: Date()))
+        RepoWatcherWidgetEntryView(entry: RepoEntry(date: Date(), repo: Repository.placeholder, avatarImageData: Data()))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
