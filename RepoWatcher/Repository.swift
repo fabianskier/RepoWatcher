@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Repository: Decodable {
+struct Repository {
     
     let name: String
     let owner: Owner
@@ -16,6 +16,7 @@ struct Repository: Decodable {
     let watchers: Int
     let openIssues: Int
     let pushedAt: String
+    var avatarData: Data
     
     static let placeholder = Repository(name: "metaprogramming",
                                         owner: Owner(avatarUrl: "https://avatars.githubusercontent.com/u/15128101?v=4"),
@@ -23,7 +24,31 @@ struct Repository: Decodable {
                                         forks: 25,
                                         watchers: 125,
                                         openIssues: 2,
-                                        pushedAt: "2022-08-09T06:37:33Z")
+                                        pushedAt: "2022-08-09T06:37:33Z",
+                                        avatarData: Data())
+}
+
+extension Repository {
+    struct CodingData: Decodable {
+        let name: String
+        let owner: Owner
+        let hasIssues: Bool
+        let forks: Int
+        let watchers: Int
+        let openIssues: Int
+        let pushedAt: String
+        
+        var repo: Repository {
+            Repository(name: name,
+                       owner: owner,
+                       hasIssues: hasIssues,
+                       forks: forks,
+                       watchers: watchers,
+                       openIssues: openIssues,
+                       pushedAt: pushedAt,
+                       avatarData: Data())
+        }
+    }
 }
 
 struct Owner: Decodable {

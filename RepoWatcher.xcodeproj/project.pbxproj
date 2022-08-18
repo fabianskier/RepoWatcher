@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0766260728ADEAEB00CB32A7 /* RepoMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0766260628ADEAEB00CB32A7 /* RepoMediumView.swift */; };
 		07731B3628A88B5700F39ABA /* RepoWatcherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B3528A88B5700F39ABA /* RepoWatcherApp.swift */; };
 		07731B3828A88B5700F39ABA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B3728A88B5700F39ABA /* ContentView.swift */; };
 		07731B3A28A88B5800F39ABA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07731B3928A88B5800F39ABA /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0766260628ADEAEB00CB32A7 /* RepoMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoMediumView.swift; sourceTree = "<group>"; };
 		07731B3228A88B5700F39ABA /* RepoWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepoWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07731B3528A88B5700F39ABA /* RepoWatcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoWatcherApp.swift; sourceTree = "<group>"; };
 		07731B3728A88B5700F39ABA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				07731B4E28A88B7600F39ABA /* RepoWatcherWidget.swift */,
 				07731B5028A88B7700F39ABA /* Assets.xcassets */,
 				07731B5228A88B7700F39ABA /* Info.plist */,
+				0766260628ADEAEB00CB32A7 /* RepoMediumView.swift */,
 			);
 			path = RepoWatcherWidget;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07731B6028A8976C00F39ABA /* NetworkManager.swift in Sources */,
+				0766260728ADEAEB00CB32A7 /* RepoMediumView.swift in Sources */,
 				07731B4F28A88B7600F39ABA /* RepoWatcherWidget.swift in Sources */,
 				07731B5D28A892ED00F39ABA /* Repository.swift in Sources */,
 			);
