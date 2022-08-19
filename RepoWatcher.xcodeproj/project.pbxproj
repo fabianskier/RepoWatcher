@@ -17,7 +17,7 @@
 		07731B4C28A88B7600F39ABA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07731B4B28A88B7600F39ABA /* SwiftUI.framework */; };
 		07731B4F28A88B7600F39ABA /* RepoWatcherWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B4E28A88B7600F39ABA /* RepoWatcherWidget.swift */; };
 		07731B5128A88B7700F39ABA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07731B5028A88B7700F39ABA /* Assets.xcassets */; };
-		07731B5528A88B7700F39ABA /* RepoWatcherWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 07731B4728A88B7600F39ABA /* RepoWatcherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		07731B5528A88B7700F39ABA /* RepoWatcherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 07731B4728A88B7600F39ABA /* RepoWatcherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		07731B5B28A8905700F39ABA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B5A28A8905700F39ABA /* Repository.swift */; };
 		07731B5D28A892ED00F39ABA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B5A28A8905700F39ABA /* Repository.swift */; };
 		07731B5F28A8976C00F39ABA /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B5E28A8976C00F39ABA /* NetworkManager.swift */; };
@@ -35,15 +35,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		07731B5928A88B7700F39ABA /* Embed App Extensions */ = {
+		07731B5928A88B7700F39ABA /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				07731B5528A88B7700F39ABA /* RepoWatcherWidgetExtension.appex in Embed App Extensions */,
+				07731B5528A88B7700F39ABA /* RepoWatcherWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -157,7 +157,7 @@
 				07731B2E28A88B5700F39ABA /* Sources */,
 				07731B2F28A88B5700F39ABA /* Frameworks */,
 				07731B3028A88B5700F39ABA /* Resources */,
-				07731B5928A88B7700F39ABA /* Embed App Extensions */,
+				07731B5928A88B7700F39ABA /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -194,7 +194,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					07731B3128A88B5700F39ABA = {
 						CreatedOnToolsVersion = 13.4.1;
