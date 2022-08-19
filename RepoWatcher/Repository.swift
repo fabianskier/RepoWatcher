@@ -17,15 +17,6 @@ struct Repository {
     let openIssues: Int
     let pushedAt: String
     var avatarData: Data
-    
-    static let placeholder = Repository(name: "metaprogramming",
-                                        owner: Owner(avatarUrl: "https://avatars.githubusercontent.com/u/15128101?v=4"),
-                                        hasIssues: true,
-                                        forks: 25,
-                                        watchers: 125,
-                                        openIssues: 2,
-                                        pushedAt: "2022-08-09T06:37:33Z",
-                                        avatarData: Data())
 }
 
 extension Repository {
