@@ -19,10 +19,38 @@ struct ContributorProvider: TimelineProvider {
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<ContributorEntry>) -> Void) {
-        let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
-        let entry = ContributorEntry(date: .now, repo: MockData.repoOne)
-        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-        completion(timeline)
+        Task {
+            let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
+            
+            do {
+                // Get repo
+                let repoToShow = RepoURL.elixirRepoURL
+                var repo = try await NetworkManager.shared.getRepo(atUrl: repoToShow)
+                let avatar = await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl)
+                repo.avatarData = avatar ?? Data()
+                
+                // Get contributors
+                let contributors = try await NetworkManager.shared.getContributors(atUrl: repoToShow + "/contributors")
+                
+                // Filter to just the top 4
+                var topFour = Array(contributors.prefix(4))
+                
+                // Download top 4 avatars
+                for i in topFour.indices {
+                    let avatar = await NetworkManager.shared.downloadImageData(from: topFour[i].avatarUrl)
+                    topFour[i].avatarData = avatar ?? Data()
+                }
+                
+                repo.contributors = topFour
+                
+                // Create entry and timeline
+                let entry = ContributorEntry(date: .now, repo: repo)
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            } catch {
+                print("😵 Error - \(error.localizedDescription)")
+            }
+        }
     }
 }
 
@@ -37,7 +65,7 @@ struct ContributorEntryView : View {
     var body: some View {
         VStack {
             RepoMediumView(repo: entry.repo)
-            ContributorMediumView()
+            ContributorMediumView(repo: entry.repo)
         }
     }
 }
