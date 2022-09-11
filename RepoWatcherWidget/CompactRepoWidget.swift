@@ -65,10 +65,13 @@ struct CompactRepoEntryView : View {
         case .systemMedium:
             RepoMediumView(repo: entry.repo)
         case .systemLarge:
-            VStack(spacing: 36) {
-                RepoMediumView(repo: entry.repo)
-                if let bottomRepo = entry.bottomRepo {
-                    RepoMediumView(repo: bottomRepo)
+            ZStack {
+                Color(uiColor: .tertiarySystemBackground)
+                VStack(spacing: 36) {
+                    RepoMediumView(repo: entry.repo)
+                    if let bottomRepo = entry.bottomRepo {
+                        RepoMediumView(repo: bottomRepo)
+                    }
                 }
             }
         case .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
