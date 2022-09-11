@@ -63,10 +63,15 @@ struct ContributorEntryView : View {
     var entry: ContributorEntry
     
     var body: some View {
-        VStack {
-            RepoMediumView(repo: entry.repo)
-            ContributorMediumView(repo: entry.repo)
+        ZStack {
+            Color(uiColor: .tertiarySystemBackground)
+            VStack() {
+                RepoMediumView(repo: entry.repo)
+                ContributorMediumView(repo: entry.repo)
+            }
+            
         }
+        
     }
 }
 
