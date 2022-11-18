@@ -13,6 +13,7 @@
 		0759DB4B28B32FF5005D5881 /* ContributorMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DB4A28B32FF5005D5881 /* ContributorMediumView.swift */; };
 		0759DB4D28B331B1005D5881 /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DB4C28B331B1005D5881 /* Contributor.swift */; };
 		0759DB4E28B331B1005D5881 /* Contributor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0759DB4C28B331B1005D5881 /* Contributor.swift */; };
+		075D0969292827A90006C383 /* UserDefaults+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075D0968292827A90006C383 /* UserDefaults+Ext.swift */; };
 		0766260728ADEAEB00CB32A7 /* RepoMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0766260628ADEAEB00CB32A7 /* RepoMediumView.swift */; };
 		07731B3628A88B5700F39ABA /* RepoWatcherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B3528A88B5700F39ABA /* RepoWatcherApp.swift */; };
 		07731B3828A88B5700F39ABA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07731B3728A88B5700F39ABA /* ContentView.swift */; };
@@ -59,6 +60,8 @@
 		0759DB4828B3287E005D5881 /* ContributorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorWidget.swift; sourceTree = "<group>"; };
 		0759DB4A28B32FF5005D5881 /* ContributorMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorMediumView.swift; sourceTree = "<group>"; };
 		0759DB4C28B331B1005D5881 /* Contributor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contributor.swift; sourceTree = "<group>"; };
+		075D0967292827450006C383 /* RepoWatcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RepoWatcher.entitlements; sourceTree = "<group>"; };
+		075D0968292827A90006C383 /* UserDefaults+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Ext.swift"; sourceTree = "<group>"; };
 		0766260628ADEAEB00CB32A7 /* RepoMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoMediumView.swift; sourceTree = "<group>"; };
 		07731B3228A88B5700F39ABA /* RepoWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepoWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07731B3528A88B5700F39ABA /* RepoWatcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoWatcherApp.swift; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		07731B3428A88B5700F39ABA /* RepoWatcher */ = {
 			isa = PBXGroup;
 			children = (
+				075D0967292827450006C383 /* RepoWatcher.entitlements */,
 				07731B3528A88B5700F39ABA /* RepoWatcherApp.swift */,
 				07731B3728A88B5700F39ABA /* ContentView.swift */,
 				07731B5A28A8905700F39ABA /* Repository.swift */,
@@ -124,6 +128,7 @@
 				07731B5E28A8976C00F39ABA /* NetworkManager.swift */,
 				07731B3928A88B5800F39ABA /* Assets.xcassets */,
 				07731B3B28A88B5800F39ABA /* Preview Content */,
+				075D0968292827A90006C383 /* UserDefaults+Ext.swift */,
 			);
 			path = RepoWatcher;
 			sourceTree = "<group>";
@@ -263,6 +268,7 @@
 			files = (
 				07731B5F28A8976C00F39ABA /* NetworkManager.swift in Sources */,
 				0759DB4D28B331B1005D5881 /* Contributor.swift in Sources */,
+				075D0969292827A90006C383 /* UserDefaults+Ext.swift in Sources */,
 				07731B3828A88B5700F39ABA /* ContentView.swift in Sources */,
 				07731B3628A88B5700F39ABA /* RepoWatcherApp.swift in Sources */,
 				07731B5B28A8905700F39ABA /* Repository.swift in Sources */,
@@ -346,7 +352,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -400,7 +406,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -416,6 +422,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RepoWatcher/RepoWatcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RepoWatcher/Preview Content\"";
@@ -446,6 +453,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RepoWatcher/RepoWatcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RepoWatcher/Preview Content\"";
