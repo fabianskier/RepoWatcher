@@ -71,6 +71,7 @@ enum NetworkError: Error {
 
 enum RepoURL {
     
+    static let prefix = "https://api.github.com/repos/"
     static let metaprogrammingRepoURL = "https://api.github.com/repos/fabianskier/metaprogramming"
     static let livebookRepoURL = "https://api.github.com/repos/livebook-dev/livebook"
     static let elixirRepoURL = "https://api.github.com/repos/elixir-lang/elixir"
