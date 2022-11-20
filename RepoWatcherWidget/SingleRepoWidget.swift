@@ -8,23 +8,23 @@
 import WidgetKit
 import SwiftUI
 
-struct SingleRepoProvider: TimelineProvider {
+struct SingleRepoProvider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SingleRepoEntry {
         SingleRepoEntry(date: .now, repo: MockData.repoOne)
     }
     
-    func getSnapshot(in context: Context, completion: @escaping (SingleRepoEntry) -> Void) {
+    func getSnapshot(for configuration: SelectSingleRepoIntent, in context: Context, completion: @escaping (SingleRepoEntry) -> Void) {
         let entry = SingleRepoEntry(date: .now, repo: MockData.repoOne)
         completion(entry)
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SingleRepoEntry>) -> Void) {
+    func getTimeline(for configuration: SelectSingleRepoIntent, in context: Context, completion: @escaping (Timeline<SingleRepoEntry>) -> Void) {
         Task {
             let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
             
             do {
                 // Get repo
-                let repoToShow = RepoURL.elixirRepoURL
+                let repoToShow = RepoURL.prefix + configuration.repo!
                 var repo = try await NetworkManager.shared.getRepo(atUrl: repoToShow)
                 let avatar = await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl)
                 repo.avatarData = avatar ?? Data()
@@ -90,7 +90,7 @@ struct SingleRepoWidget: Widget {
     let kind: String = "SingleRepoWidget"
     
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: SingleRepoProvider()) { entry in
+        IntentConfiguration(kind: kind, intent: SelectSingleRepoIntent.self, provider: SingleRepoProvider()) { entry in
             SingleRepoEntryView(entry: entry)
         }
         .configurationDisplayName("Single Repo")
