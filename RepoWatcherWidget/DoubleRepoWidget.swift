@@ -8,28 +8,28 @@
 import WidgetKit
 import SwiftUI
 
-struct DoubleRepoProvider: TimelineProvider {
+struct DoubleRepoProvider: IntentTimelineProvider {
     func placeholder(in context: Context) -> DoubleRepoEntry {
         DoubleRepoEntry(date: Date(), topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
     }
     
-    func getSnapshot(in context: Context, completion: @escaping (DoubleRepoEntry) -> ()) {
+    func getSnapshot(for configuration: SelectTwoReposIntent, in context: Context, completion: @escaping (DoubleRepoEntry) -> Void) {
         let entry = DoubleRepoEntry(date: Date(), topRepo: MockData.repoOne, bottomRepo: MockData.repoTwo)
         completion(entry)
     }
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(for configuration: SelectTwoReposIntent, in context: Context, completion: @escaping (Timeline<DoubleRepoEntry>) -> Void) {
         Task {
             let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
             
             do {
                 // get top repo
-                var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.elixirRepoURL)
+                var repo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.prefix + configuration.topRepo!)
                 let topAvatarImageData = await NetworkManager.shared.downloadImageData(from: repo.owner.avatarUrl)
                 repo.avatarData = topAvatarImageData ?? Data()
                 
                 // get bottom repo
-                var bottomRepo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.livebookRepoURL)
+                var bottomRepo = try await NetworkManager.shared.getRepo(atUrl: RepoURL.prefix + configuration.bottomRepo!)
                 let bottomAvatarImageData = await NetworkManager.shared.downloadImageData(from: bottomRepo.owner.avatarUrl)
                 bottomRepo.avatarData = bottomAvatarImageData ?? Data()
                 
@@ -42,6 +42,7 @@ struct DoubleRepoProvider: TimelineProvider {
             }
         }
     }
+    
 }
 
 struct DoubleRepoEntry: TimelineEntry {
@@ -69,7 +70,7 @@ struct DoubleRepoWidget: Widget {
     let kind: String = "DoubleRepoWidget"
     
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: DoubleRepoProvider()) { entry in
+        IntentConfiguration(kind: kind, intent: SelectTwoReposIntent.self, provider: DoubleRepoProvider()) { entry in
             DoubleRepoEntryView(entry: entry)
         }
         .configurationDisplayName("Repo Watcher")
