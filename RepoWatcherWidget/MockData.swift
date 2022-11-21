@@ -23,9 +23,9 @@ struct MockData {
                                                        Contributor(login: "Yoshi Cristaldo", avatarUrl: "", contributions: 1000, avatarData: Data())
                                                       ])
     
-    static let repoTwo = Repository(name: "metaprogramming",
+    static let repoTwo = Repository(name: "swift",
                                         owner: Owner(avatarUrl: "https://avatars.githubusercontent.com/u/15128101?v=4"),
-                                        hasIssues: false,
+                                        hasIssues: true,
                                         forks: 25,
                                         watchers: 12,
                                         openIssues: 2,
